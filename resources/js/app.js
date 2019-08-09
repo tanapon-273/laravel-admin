@@ -18,6 +18,7 @@ let routes = [
   ]
 
 const router = new VueRouter({
+    mode: 'history', //clear url before /home/dashboard after /dashboard
     routes // short for `routes: routes`
   })
 
