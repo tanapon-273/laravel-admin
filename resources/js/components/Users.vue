@@ -88,7 +88,7 @@
             </div>
 
             <div class="form-group">
-                <input v-model="form.bio" type="email" name="bio" id="bio"
+                <input v-model="form.bio" name="bio" id="bio"
                 placeholder="Short bio for user (optional)"
                 class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
                     <has-error :form="form" field="bio"></has-error>
@@ -114,7 +114,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Create</button>
           </div>
         </form>
 

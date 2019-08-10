@@ -38692,7 +38692,6 @@ var render = function() {
                           staticClass: "form-control",
                           class: { "is-invalid": _vm.form.errors.has("bio") },
                           attrs: {
-                            type: "email",
                             name: "bio",
                             id: "bio",
                             placeholder: "Short bio for user (optional)"
@@ -38948,7 +38947,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Create")]
       )
     ])
