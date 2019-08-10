@@ -13112,6 +13112,14 @@ a.text-muted:hover {
   color: #3490dc;
 }
 
+.icon-danger {
+  color: #dc3545;
+}
+
+.icon-warning {
+  color: #ffc107;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
