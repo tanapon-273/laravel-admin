@@ -147,6 +147,11 @@ export default {
       createUser(){
           this.$Progress.start()
           this.form.post('api/user')
+          $('#addNew').modal('hide') //ซ่อน popup addNew เมื่อกดสร้าง user สำเร็จ
+          Toast.fire({
+            type: 'success',
+            title: 'User Created in successfully'
+          })
           this.$Progress.finish()
       }
   },
