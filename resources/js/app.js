@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import moment from 'moment'
 
 import { Form, HasError, AlertError } from 'vform'
 
@@ -28,6 +29,14 @@ const router = new VueRouter({
     mode: 'history', //clear url before /home/dashboard after /dashboard
     routes // short for `routes: routes`
   })
+
+Vue.filter('upText', function(text){
+  return text.charAt(0).toUpperCase() + text.slice(1) // เปลี่ยน Text ตัวแรกเป็นตัวใหญ่
+})
+
+Vue.filter('myDate', function(created){
+  return moment(created).format('Do MMMM YYYY');
+})
 
 /**
  * The following block of code may be used to automatically register your
