@@ -2081,17 +2081,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       users: {},
       form: new Form({
-        name: '',
-        email: '',
-        password: '',
-        type: '',
-        bio: '',
-        photo: ''
+        name: "",
+        email: "",
+        password: "",
+        type: "",
+        bio: "",
+        photo: ""
       })
     };
   },
@@ -2105,25 +2128,29 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createUser: function createUser() {
+      var _this2 = this;
+
       this.$Progress.start();
-      this.form.post('api/user');
-      Fire.$emit('AfterCreate'); // โหลดใหม่ทุกครั้งที่มีการเพิ่ม User
+      this.form.post("api/user").then(function () {
+        Fire.$emit("AfterCreate"); // โหลดใหม่ทุกครั้งที่มีการเพิ่ม User
 
-      $('#addNew').modal('hide'); //ซ่อน popup addNew เมื่อกดสร้าง user สำเร็จ
+        $("#addNew").modal("hide"); //ซ่อน popup addNew เมื่อกดสร้าง user สำเร็จ
 
-      Toast.fire({
-        type: 'success',
-        title: 'User Created in successfully'
-      });
-      this.$Progress.finish();
+        Toast.fire({
+          type: "success",
+          title: "User Created in successfully"
+        });
+
+        _this2.$Progress.finish();
+      })["catch"](function () {});
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.loadUsers();
-    Fire.$on('AfterCreate', function () {
-      _this2.loadUsers();
+    Fire.$on("AfterCreate", function () {
+      _this3.loadUsers();
     }); //setInterval(() => this.loadUsers(), 3000) //โหลดข้อมูลทุกๆ 3 วินาที
   }
 });
