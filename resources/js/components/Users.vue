@@ -7,7 +7,7 @@
             <h3 class="card-title">Users Table</h3>
 
             <div class="card-tools">
-              <button class="btn btn-success" data-toggle="modal" data-target="#addNew">
+              <button class="btn btn-success" @click="newModal">
                 Add New
                 <i class="fas fa-user-plus fa-fw"></i>
               </button>
@@ -34,7 +34,7 @@
                   <td>{{user.type | upText}}</td>
                   <td>{{user.created_at | myDate}}</td>
                   <td>
-                    <a href="#">
+                    <a href="#" @click="editModal(user)">
                       <i class="fa fa-edit icon-warning"></i>
                     </a>
                     /
@@ -64,13 +64,14 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addNewLabel">Add New</h5>
+            <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
+            <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User Info</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
-          <form @submit.prevent="createUser">
+          <form @submit.prevent="editmode ? updateUser() : createUser()">
             <div class="modal-body">
               <div class="form-group">
                 <input
@@ -139,7 +140,8 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Create</button>
+              <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
+              <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
             </div>
           </form>
         </div>
@@ -152,8 +154,10 @@
 export default {
   data() {
     return {
+      editmode: false,
       users: {},
       form: new Form({
+        id : "",
         name: "",
         email: "",
         password: "",
@@ -164,6 +168,32 @@ export default {
     };
   },
   methods: {
+    updateUser(){
+      this.$Progress.start();
+      //console.log('Editng Data')
+      this.form.put('api/user/'+this.form.id)
+      .then(() => {
+        // success
+        $("#addNew").modal("hide")
+        Swal.fire("Updated!", "Infomation has been updated.", "success")
+        this.$Progress.finish();
+        Fire.$emit("AfterCreate")
+      })
+      .catch(() => {
+        this.$Progress.fail();
+      })
+    },
+    editModal(user){
+      this.editmode = true // เปลี่ยนปุ่มเมนูตามโหมด edit หรือ addnew
+      this.form.reset()
+      $("#addNew").modal("show")
+      this.form.fill(user) // นำข้อมูลเก่ามาแสดงเพื่อแก้ไข
+    },
+    newModal(){
+      this.editmode = false
+      this.form.reset()
+      $("#addNew").modal("show")
+    },
     deleteUser(id) {
       Swal.fire({
         title: "Are you sure?",
