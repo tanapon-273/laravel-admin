@@ -2107,6 +2107,8 @@ __webpack_require__.r(__webpack_exports__);
     createUser: function createUser() {
       this.$Progress.start();
       this.form.post('api/user');
+      Fire.$emit('AfterCreate'); // โหลดใหม่ทุกครั้งที่มีการเพิ่ม User
+
       $('#addNew').modal('hide'); //ซ่อน popup addNew เมื่อกดสร้าง user สำเร็จ
 
       Toast.fire({
@@ -2120,9 +2122,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     this.loadUsers();
-    setInterval(function () {
-      return _this2.loadUsers();
-    }, 3000); //โหลดข้อมูลทุกๆ 3 วินาที
+    Fire.$on('AfterCreate', function () {
+      _this2.loadUsers();
+    }); //setInterval(() => this.loadUsers(), 3000) //โหลดข้อมูลทุกๆ 3 วินาที
   }
 });
 
@@ -74601,6 +74603,7 @@ Vue.filter('upText', function (text) {
 Vue.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format('Do MMMM YYYY');
 });
+window.Fire = new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

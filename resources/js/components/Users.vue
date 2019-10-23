@@ -147,6 +147,7 @@ export default {
       createUser(){
           this.$Progress.start()
           this.form.post('api/user')
+          Fire.$emit('AfterCreate') // โหลดใหม่ทุกครั้งที่มีการเพิ่ม User
           $('#addNew').modal('hide') //ซ่อน popup addNew เมื่อกดสร้าง user สำเร็จ
           Toast.fire({
             type: 'success',
@@ -157,7 +158,10 @@ export default {
   },
   created() {
     this.loadUsers()
-    setInterval(() => this.loadUsers(), 3000) //โหลดข้อมูลทุกๆ 3 วินาที
+    Fire.$on('AfterCreate', () => {
+      this.loadUsers()
+    })
+    //setInterval(() => this.loadUsers(), 3000) //โหลดข้อมูลทุกๆ 3 วินาที
   }
 };
 </script>
