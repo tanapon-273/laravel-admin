@@ -38,7 +38,7 @@
                       <i class="fa fa-edit icon-warning"></i>
                     </a>
                     /
-                    <a href="#">
+                    <a href="#" @click="deleteUser(user.id)">
                       <i class="fa fa-trash icon-danger"></i>
                     </a>
                   </td>
@@ -164,6 +164,28 @@ export default {
     };
   },
   methods: {
+    deleteUser(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+
+        // Send request to the server
+        if (result.value) {
+        this.form.delete('api/user/'+id).then(() => {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success")
+            Fire.$emit("AfterCreate")
+        }).catch(() => {
+          Swal.fire("Failed!", "There was someting wrong", "warning")
+        })
+        }
+      })
+    },
     loadUsers() {
       axios.get("api/user").then(({ data }) => (this.users = data.data));
     },
@@ -182,9 +204,7 @@ export default {
           this.$Progress.finish();
         })
 
-        .catch(() => {
-          
-        });
+        .catch(() => {});
     }
   },
   created() {
